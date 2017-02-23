@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <s:schema xmlns:s="http://www.w3.org/2001/XMLSchema"
           xmlns="http://www.codecentric.de/namespace/weatherservice/exception"
-          xmlns:exception="http://www.codecentric.de/namespace/weatherservice/exception"
           targetNamespace="http://www.codecentric.de/namespace/weatherservice/exception"
           elementFormDefault="qualified"
           version="1.0">

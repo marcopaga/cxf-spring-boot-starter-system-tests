@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<s:schema
+        xmlns:s="http://www.w3.org/2001/XMLSchema"
+        targetNamespace="http://www.codecentric.de/namespace/weatherservice/"
+        elementFormDefault="qualified"
+        version="1.0">
+      
+      <s:import namespace="http://www.codecentric.de/namespace/weatherservice/general"
+                schemaLocation="Weather-Schemes/weather-general.xsd"/>
+                
+      <s:import namespace="http://www.codecentric.de/namespace/weatherservice/exception"
+                schemaLocation="Weather-Schemes/weather-exception.xsd"/>          
+      
+</s:schema>
