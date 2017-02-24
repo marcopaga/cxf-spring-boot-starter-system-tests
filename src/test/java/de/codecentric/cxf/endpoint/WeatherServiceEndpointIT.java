@@ -2,13 +2,16 @@ package de.codecentric.cxf.endpoint;
 
 
 import de.codecentric.cxf.TestServiceSystemTestConfiguration;
+import de.codecentric.cxf.common.XmlUtils;
 import de.codecentric.namespace.weatherservice.WeatherService;
+import de.codecentric.namespace.weatherservice.general.ForecastReturn;
+import de.codecentric.namespace.weatherservice.general.GetCityForecastByZIP;
 import org.apache.commons.io.FileUtils;
+import org.apache.cxf.jaxws.JaxWsProxyFactoryBean;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Import;
@@ -19,6 +22,9 @@ import org.testcontainers.containers.BindMode;
 import org.testcontainers.containers.GenericContainer;
 import org.testcontainers.containers.wait.Wait;
 import org.testcontainers.images.builder.ImageFromDockerfile;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 @RunWith(SpringRunner.class)
 @Import(TestServiceSystemTestConfiguration.class)
@@ -56,12 +62,25 @@ public class WeatherServiceEndpointIT {
 		bootapp.stop();
 	}
 
-	@Autowired
-	private WeatherService weatherServiceClient;
-
 	@Test
-	public void justMakeSureTheDockerContainersComeUpAsExpected() throws Exception {
-		// The Boot-App and the reverse proxy are up and respond to WSDL requests
-	}
+    public void client_call_to_service() throws Exception {
+        JaxWsProxyFactoryBean jaxWsFactory = new JaxWsProxyFactoryBean();
+        jaxWsFactory.setServiceClass(WeatherService.class);
+        jaxWsFactory.setAddress("http://" + nginx.getContainerIpAddress() + ":" + nginx.getMappedPort(80) + "/proxied-weather/Weather");
+        WeatherService weatherServiceClient = (WeatherService) jaxWsFactory.create();
+
+        // Given
+        GetCityForecastByZIP getCityForecastByZIP = XmlUtils.readSoapMessageFromStreamAndUnmarshallBody2Object(
+                GetCityForecastByZIPTestXml.getInputStream(), GetCityForecastByZIP.class);
+
+        // When
+        ForecastReturn forecastReturn = weatherServiceClient.getCityForecastByZIP(getCityForecastByZIP.getForecastRequest());
+
+        // Then
+        assertNotNull(forecastReturn);
+        assertEquals("Weimar", forecastReturn.getCity());
+        assertEquals("22%", forecastReturn.getForecastResult().getForecast().get(0).getProbabilityOfPrecipiation().getDaytime());
+    }
+
 
 }
