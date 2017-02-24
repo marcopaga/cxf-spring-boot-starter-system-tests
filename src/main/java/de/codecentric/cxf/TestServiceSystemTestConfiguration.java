@@ -4,7 +4,6 @@ import org.apache.cxf.jaxws.JaxWsProxyFactoryBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
 
 import de.codecentric.cxf.common.BootStarterCxfException;
 import de.codecentric.cxf.configuration.CxfAutoConfiguration;
