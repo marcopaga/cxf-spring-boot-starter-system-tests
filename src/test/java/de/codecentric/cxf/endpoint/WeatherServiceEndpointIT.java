@@ -2,12 +2,8 @@ package de.codecentric.cxf.endpoint;
 
 
 import de.codecentric.cxf.TestServiceSystemTestConfiguration;
-import de.codecentric.cxf.common.XmlUtils;
 import de.codecentric.namespace.weatherservice.WeatherService;
-import de.codecentric.namespace.weatherservice.general.ForecastReturn;
-import de.codecentric.namespace.weatherservice.general.GetCityForecastByZIP;
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.IOUtils;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -23,9 +19,6 @@ import org.testcontainers.containers.BindMode;
 import org.testcontainers.containers.GenericContainer;
 import org.testcontainers.containers.wait.Wait;
 import org.testcontainers.images.builder.ImageFromDockerfile;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 
 @RunWith(SpringRunner.class)
 @Import(TestServiceSystemTestConfiguration.class)
@@ -44,7 +37,7 @@ public class WeatherServiceEndpointIT {
 	public GenericContainer nginx = new GenericContainer("nginx:alpine")
 			.withClasspathResourceMapping("nginx.conf", "/etc/nginx/nginx.conf", BindMode.READ_ONLY)
 			.withExposedPorts(80)
-			.waitingFor(Wait.forHttp("/weather/Weather?wsdl"))
+			.waitingFor(Wait.forHttp("/proxied-weather/Weather?wsdl"))
 			;
 
 	@Value(value="classpath:requests/GetCityForecastByZIPTest.xml")
@@ -67,25 +60,8 @@ public class WeatherServiceEndpointIT {
 	private WeatherService weatherServiceClient;
 
 	@Test
-	public void isEndpointCorrectlyAutoDetectedAndConfigured() throws Exception {
-		System.out.println("Boot-App IP: " + bootapp.getContainerIpAddress());
-		System.out.println("Boot-App Port: " + bootapp.getMappedPort(8080));
-
-		System.out.println("Nginx IP: " + nginx.getContainerIpAddress());
-		System.out.println("Nginx Port: " + nginx.getMappedPort(80));
-		IOUtils.readLines(System.in);
-
-		// Given
-		GetCityForecastByZIP getCityForecastByZIP = XmlUtils.readSoapMessageFromStreamAndUnmarshallBody2Object(
-				GetCityForecastByZIPTestXml.getInputStream(), GetCityForecastByZIP.class);
-
-		// When
-		ForecastReturn forecastReturn = weatherServiceClient.getCityForecastByZIP(getCityForecastByZIP.getForecastRequest());
-
-		// Then
-		assertNotNull(forecastReturn);
-		assertEquals("Weimar", forecastReturn.getCity());
-		assertEquals("22%", forecastReturn.getForecastResult().getForecast().get(0).getProbabilityOfPrecipiation().getDaytime());
+	public void justMakeSureTheDockerContainersComeUpAsExpected() throws Exception {
+		// The Boot-App and the reverse proxy are up and respond to WSDL requests
 	}
 
 }
