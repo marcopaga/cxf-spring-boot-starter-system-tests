@@ -58,14 +58,6 @@
 		<spring.boot.version>1.4.4.RELEASE</spring.boot.version>
 		<cxf.version>3.1.9</cxf.version>
 		<fluent-hc.version>4.5.2</fluent-hc.version>
-		<camunda.version>7.6.0</camunda.version>
-		<logstash-logback-encoder.version>4.8</logstash-logback-encoder.version>
-		<commons-io.version>2.5</commons-io.version>
-		<fast-classpath-scanner.version>2.0.9</fast-classpath-scanner.version>
-		<spring.cloud.sleuth.version>1.1.1.RELEASE</spring.cloud.sleuth.version>
-        <!-- Overriding SpringBoot 1.3.4ff´s logback 1.1.7, because of http://jira.qos.ch/browse/LOGBACK-1164 which
-                    is only fixed in the unreleased 1.1.8  -->
-        <logback.version>1.1.6</logback.version>
 		<!-- Analysis Tools for CI -->
 		<build-plugin.jacoco.version>0.7.8</build-plugin.jacoco.version>
 		<build-plugin.coveralls.version>4.3.0</build-plugin.coveralls.version>
@@ -81,15 +73,6 @@
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
-
-			<dependency>
-				<groupId>org.springframework.cloud</groupId>
-				<artifactId>spring-cloud-sleuth</artifactId>
-				<version>${spring.cloud.sleuth.version}</version>
-				<type>pom</type>
-				<scope>import</scope>
-			</dependency>
-
 		</dependencies>
 	</dependencyManagement>
 
@@ -137,7 +120,7 @@
 					</execution>
 				</executions>
 			</plugin>
-			<!-- Used for testing purposes. -->
+
 			<plugin>
 				<groupId>de.codecentric</groupId>
 				<artifactId>cxf-spring-boot-starter-maven-plugin</artifactId>
@@ -152,31 +135,6 @@
 			</plugin>
 			
 			<plugin>
-				<groupId>org.jacoco</groupId>
-				<artifactId>jacoco-maven-plugin</artifactId>
-				<version>${build-plugin.jacoco.version}</version>
-				<executions>
-					<!-- Prepares the property pointing to the JaCoCo
-                    runtime agent which is passed as VM argument when Maven the Surefire plugin
-                    is executed. -->
-					<execution>
-						<id>pre-unit-test</id>
-						<goals>
-							<goal>prepare-agent</goal>
-						</goals>
-					</execution>
-					<!-- Ensures that the code coverage report for
-                    unit tests is created after unit tests have been run. -->
-					<execution>
-						<id>post-unit-test</id>
-						<phase>test</phase>
-						<goals>
-							<goal>report</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
 				<groupId>org.eluder.coveralls</groupId>
 				<artifactId>coveralls-maven-plugin</artifactId>
 				<version>${build-plugin.coveralls.version}</version>
@@ -188,7 +146,7 @@
 				<version>0.4.11</version>
 				<configuration>
 					<imageName>${project.groupId}/${project.artifactId}</imageName>
-					<dockerDirectory>src/main/docker</dockerDirectory>
+					<dockerDirectory>src/main/resources/docker</dockerDirectory>
 					<resources>
 						<resource>
 							<targetPath>/</targetPath>
@@ -233,91 +191,6 @@
 			</plugin>
 		</plugins>
 	</build>
-	
-	<profiles>
-		<!-- plugins needed to deploy to Maven Central -->
-		<profile>
-			<id>central-deploy</id>
-			<build>
-				<plugins>
-					<plugin>
-				        <artifactId>maven-gpg-plugin</artifactId>
-				        <version>1.6</version>
-				        <executions>
-				          <execution>
-				            <id>sign-artifacts</id>
-				            <phase>verify</phase>
-				            <goals>
-				              <goal>sign</goal>
-				            </goals>
-				          </execution>
-				        </executions>
-				    </plugin>
-				    <plugin>
-				        <groupId>org.codehaus.mojo</groupId>
-				        <artifactId>versions-maven-plugin</artifactId>
-				        <version>2.3</version>
-				        <configuration>
-				          <generateBackupPoms>false</generateBackupPoms>
-				        </configuration>
-				    </plugin>
-				    <plugin>
-				        <artifactId>maven-deploy-plugin</artifactId>
-				        <configuration>
-				          <skip>true</skip>
-				        </configuration>
-				    </plugin>
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-source-plugin</artifactId>
-						<version>3.0.1</version>
-						<executions>
-							<execution>
-								<id>attach-sources</id>
-								<goals>
-									<goal>jar</goal>
-								</goals>
-							</execution>
-						</executions>
-					</plugin>
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-javadoc-plugin</artifactId>
-						<version>2.10.4</version>
-						<executions>
-							<execution>
-								<id>attach-javadocs</id>
-								<goals>
-									<goal>jar</goal>
-								</goals>
-							</execution>
-						</executions>
-					</plugin>
-					<plugin>
-				        <groupId>org.sonatype.plugins</groupId>
-				        <artifactId>nexus-staging-maven-plugin</artifactId>
-				        <version>1.6.7</version>
-				        <extensions>true</extensions>
-				        <configuration>
-				          <serverId>oss.sonatype.org</serverId>
-				          <nexusUrl>https://oss.sonatype.org/</nexusUrl>
-				          <description>${project.version}</description>
-				        </configuration>
-				        <executions>
-				          <execution>
-				            <id>deploy-to-sonatype</id>
-				            <phase>deploy</phase>
-				            <goals>
-				              <goal>deploy</goal>
-				              <goal>release</goal>
-				            </goals>
-				          </execution>
-				        </executions>
-				    </plugin>
-				</plugins>
-			</build>
-		</profile>
-	</profiles>
 	
 	<repositories>
 		<repository>

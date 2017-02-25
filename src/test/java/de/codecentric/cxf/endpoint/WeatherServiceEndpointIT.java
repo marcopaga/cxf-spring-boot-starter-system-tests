@@ -1,7 +1,6 @@
 package de.codecentric.cxf.endpoint;
 
 
-import de.codecentric.cxf.TestServiceSystemTestConfiguration;
 import de.codecentric.cxf.common.XmlUtils;
 import de.codecentric.namespace.weatherservice.WeatherService;
 import de.codecentric.namespace.weatherservice.general.ForecastReturn;
@@ -13,9 +12,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.context.annotation.Import;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.io.Resource;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.testcontainers.containers.BindMode;
@@ -27,9 +23,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 @RunWith(SpringRunner.class)
-@Import(TestServiceSystemTestConfiguration.class)
-@EnableAutoConfiguration
-@PropertySource("classpath:application-client-mode.properties")
 public class WeatherServiceEndpointIT {
 
 	public GenericContainer bootapp = new GenericContainer(
