@@ -14,7 +14,6 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.testcontainers.containers.BindMode;
 import org.testcontainers.containers.GenericContainer;
 import org.testcontainers.containers.wait.Wait;
 import org.testcontainers.images.builder.ImageFromDockerfile;
@@ -27,17 +26,17 @@ public class WeatherServiceEndpointIT {
 
 	public GenericContainer bootapp = new GenericContainer(
 			new ImageFromDockerfile()
-					.withFileFromFile("Dockerfile", FileUtils.getFile("src", "main", "resources", "docker", "Dockerfile"))
-					.withFileFromFile("cxf-spring-boot-starter-system-tests-1.1.1-SNAPSHOT.jar", FileUtils.getFile("target", "cxf-spring-boot-starter-system-tests-1.1.1-SNAPSHOT.jar"))
-	)
+					.withFileFromFile("Dockerfile", FileUtils.getFile("src", "main", "resources", "docker", "java-service", "Dockerfile"))
+					.withFileFromFile("cxf-spring-boot-starter-system-tests-1.1.1-SNAPSHOT.jar", FileUtils.getFile("target", "cxf-spring-boot-starter-system-tests-1.1.1-SNAPSHOT.jar")))
 			.withExposedPorts(8080)
 			.waitingFor(Wait.forHttp("/weather/Weather?wsdl"));
 
-	public GenericContainer nginx = new GenericContainer("nginx:alpine")
-			.withClasspathResourceMapping("nginx.conf", "/etc/nginx/nginx.conf", BindMode.READ_ONLY)
+	public GenericContainer nginx = new GenericContainer(
+			new ImageFromDockerfile()
+					.withFileFromFile("Dockerfile", FileUtils.getFile("src", "main", "resources", "docker", "nginx", "Dockerfile"))
+					.withFileFromFile("nginx.conf", FileUtils.getFile("src", "main", "resources", "docker", "nginx", "nginx.conf")))
 			.withExposedPorts(80)
-			.waitingFor(Wait.forHttp("/proxied-weather/Weather?wsdl"))
-			;
+			.waitingFor(Wait.forHttp("/proxied-weather/Weather?wsdl"));
 
 	@Value(value="classpath:requests/GetCityForecastByZIPTest.xml")
 	private Resource GetCityForecastByZIPTestXml;
