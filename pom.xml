@@ -140,13 +140,27 @@
 				<version>${build-plugin.coveralls.version}</version>
 			</plugin>
 
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>1.5.2.RELEASE</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
 			<plugin>
 				<groupId>com.spotify</groupId>
 				<artifactId>docker-maven-plugin</artifactId>
 				<version>0.4.11</version>
 				<configuration>
 					<imageName>${project.groupId}/${project.artifactId}</imageName>
-					<dockerDirectory>src/main/resources/docker</dockerDirectory>
+					<dockerDirectory>src/main/resources/docker/java-service</dockerDirectory>
 					<resources>
 						<resource>
 							<targetPath>/</targetPath>
