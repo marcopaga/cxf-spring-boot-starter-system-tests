@@ -1,12 +1,14 @@
-version: '2'
+version: '3'
 services:
   java-service:
-    build: ./java-service/
-  nginx:
-    build: ./nginx/
+    image: marcopaga/cxf-spring-boot-starter-system-tests
+  lb:
+    image: dockercloud/haproxy:1.6.4
     ports:
     - "80:80"
     depends_on:
       - java-service
     links:
       - java-service:bootapp
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
