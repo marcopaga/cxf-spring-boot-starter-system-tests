@@ -7,11 +7,11 @@
 		<version>7</version>
 	</parent>
 	<groupId>de.codecentric</groupId>
-  <artifactId>cxf-spring-boot-starter-system-tests</artifactId>
+  	<artifactId>cxf-spring-boot-starter-system-tests</artifactId>
 	<version>1.1.1-SNAPSHOT</version>
-  <name>cxf-spring-boot-starter-system-tests</name>
-  <packaging>jar</packaging>
-  <url>https://github.com/codecentric/cxf-spring-boot-starter-system-tests</url>
+  	<name>cxf-spring-boot-starter-system-tests</name>
+  	<packaging>jar</packaging>
+  	<url>https://github.com/codecentric/cxf-spring-boot-starter-system-tests</url>
 	<licenses>
 		<license>
 			<name>Apache License, Version 2.0</name>
@@ -49,15 +49,15 @@
 	   </snapshotRepository>
 	</distributionManagement>
 	<properties>
-		<cxf-spring-boot-starter-maven-plugin.version>1.0.8.RELEASE</cxf-spring-boot-starter-maven-plugin.version>
+		<spring.boot.version>1.5.2.RELEASE</spring.boot.version>
+		<cxf-spring-boot-starter.version>1.1.1.RELEASE</cxf-spring-boot-starter.version>
+		<cxf-spring-boot-starter-maven-plugin.version>1.1.1.RELEASE</cxf-spring-boot-starter-maven-plugin.version>
+		<testcontainers.version>1.2.0</testcontainers.version>
 		<java.version>1.8</java.version>
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<spring.boot.version>1.4.4.RELEASE</spring.boot.version>
-		<cxf.version>3.1.9</cxf.version>
-		<fluent-hc.version>4.5.2</fluent-hc.version>
 		<!-- Analysis Tools for CI -->
 		<build-plugin.jacoco.version>0.7.8</build-plugin.jacoco.version>
 		<build-plugin.coveralls.version>4.3.0</build-plugin.coveralls.version>
@@ -81,10 +81,10 @@
 		<dependency>
 			<groupId>de.codecentric</groupId>
 			<artifactId>cxf-spring-boot-starter</artifactId>
-			<version>1.1.1-SNAPSHOT</version>
+			<version>${cxf-spring-boot-starter.version}</version>
 		</dependency>
 
-    <!-- Test -->
+    	<!-- Test -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
@@ -101,7 +101,7 @@
 		<dependency>
 			<groupId>org.testcontainers</groupId>
 			<artifactId>testcontainers</artifactId>
-			<version>1.1.8</version>
+			<version>${testcontainers.version}</version>
 			<scope>test</scope>
 		</dependency>
 
