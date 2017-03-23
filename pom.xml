@@ -51,6 +51,7 @@
         </snapshotRepository>
     </distributionManagement>
     <properties>
+        <cxf-spring-boot-starter.version>1.1.1.RELEASE</cxf-spring-boot-starter.version>
         <cxf-spring-boot-starter-maven-plugin.version>1.1.1-SNAPSHOT</cxf-spring-boot-starter-maven-plugin.version>
         <java.version>1.8</java.version>
         <maven.compiler.target>1.8</maven.compiler.target>
@@ -83,7 +84,7 @@
         <dependency>
             <groupId>de.codecentric</groupId>
             <artifactId>cxf-spring-boot-starter</artifactId>
-            <version>1.1.1-SNAPSHOT</version>
+            <version>${cxf-spring-boot-starter.version}</version>
         </dependency>
 
         <!-- Test -->
@@ -113,9 +114,10 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>1.5.2.RELEASE</version>
                 <executions>
                     <execution>
-                        <phase>pre-integration-test</phase>
+                        <phase>package</phase>
                         <goals>
                             <goal>repackage</goal>
                         </goals>
@@ -140,20 +142,6 @@
                 <groupId>org.eluder.coveralls</groupId>
                 <artifactId>coveralls-maven-plugin</artifactId>
                 <version>${build-plugin.coveralls.version}</version>
-            </plugin>
-
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>1.5.2.RELEASE</version>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>repackage</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
 
             <plugin>
