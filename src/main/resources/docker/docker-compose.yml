@@ -1,0 +1,12 @@
+version: '2'
+services:
+  java-service:
+    build: ./java-service/
+  nginx:
+    build: ./nginx/
+    ports:
+    - "80:80"
+    depends_on:
+      - java-service
+    links:
+      - java-service:bootapp
