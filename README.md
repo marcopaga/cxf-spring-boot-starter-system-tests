@@ -1,11 +1,11 @@
 # cxf-spring-boot-starter-system-tests
-System Tests for the [cxf-spring-boot-starter](https://github.com/codecentric/cxf-spring-boot-starter) including proxy Nginx and the Spring Boot projekt using the starter both inside [Docker](https://www.docker.com/) Containers, run with [testcontainers-java](https://github.com/testcontainers/testcontainers-java).
+System Tests for the [cxf-spring-boot-starter](https://github.com/codecentric/cxf-spring-boot-starter) including a reverse proxy and the Spring Boot project using the starter both inside [Docker](https://www.docker.com/) Containers, run with [testcontainers-java](https://github.com/testcontainers/testcontainers-java).
 
 [![Build Status](https://travis-ci.org/marcopaga/cxf-spring-boot-starter-system-tests.svg?branch=master)](https://travis-ci.org/marcopaga/cxf-spring-boot-starter-system-tests)
 
+Here you can find the infrastructure for the current setup:
 
-Currently this is a rough starting point. The docker containers are used in an integration test.
-The test just works within intellij and not maven. I have to fix some classloading issues.
+![Infrastructure Diagram](infrastructure.jpeg)
 
 ### HowTo
 
