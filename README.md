@@ -7,8 +7,20 @@ Here you can find the infrastructure for the current setup:
 
 ![Infrastructure Diagram](infrastructure.jpeg)
 
-### HowTo
+# Local python installation
 
-First run `mvn clean package` which will generate all necessary class files with the help of the cxf-spring-boot-starter-maven-plugin and then generate the needed `target/cxf-spring-boot-starter-system-tests-1.1.1-SNAPSHOT.jar` (Otherwise [you´ll get a FileNotFound](https://github.com/marcopaga/cxf-spring-boot-starter-system-tests/issues/2)).
+## Create a python virtualenv
+    virtualenv ~/.virtualenvs/boto
 
-Now you should be able to run the Test [WeatherServiceEndpointIT.java](https://github.com/marcopaga/cxf-spring-boot-starter-system-tests/blob/master/src/test/java/de/codecentric/cxf/endpoint/WeatherServiceEndpointIT.java) inside Intellij.
+## boto und boto3 installieren
+    pip install boto
+    pip install boto3
+
+# Before working on the project
+    
+You need to make sure that the python virtualenv is activated. In order to use amazon web services you need to provide the sepcific access keys. 
+
+    source ~/.virtualenvs/boto/bin/activate
+
+    AWS_ACCESS_KEY_ID
+    AWS_SECRET_ACCESS_KEY

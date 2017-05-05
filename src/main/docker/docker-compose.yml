@@ -1,0 +1,10 @@
+version: '2'
+services:
+  bootapp:
+    image: marcopaga/cxf-spring-boot-starter-system-tests
+  nginx:
+    build: ./nginx/
+    ports:
+    - "80:80"
+    depends_on:
+      - bootapp

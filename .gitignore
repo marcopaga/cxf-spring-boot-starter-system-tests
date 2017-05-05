@@ -1,5 +1,6 @@
 *.class
 .wercker
+.env
 
 # Package Files #
 *.jar
@@ -23,3 +24,6 @@ target
 
 # logback
 logback.out.xml
+
+# Terraform
+*.tfstate*
