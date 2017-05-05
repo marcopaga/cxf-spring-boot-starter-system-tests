@@ -1,0 +1,9 @@
+---
+
+- hosts: tag_Role_bootapp
+  tasks:
+    - command: echo this instance is used for the boot application
+
+- hosts: all
+  tasks:
+    - command: echo this is run on every server

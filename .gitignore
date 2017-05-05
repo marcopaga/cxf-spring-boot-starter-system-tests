@@ -27,3 +27,4 @@ logback.out.xml
 
 # Terraform
 *.tfstate*
+*.retry

@@ -155,7 +155,8 @@ resource "aws_instance" "web" {
   subnet_id = "${aws_subnet.default.id}"
 
   tags = {
-    Role = "bootapp"
+    Role = "bootapp",
+    Env = "dev"
   }
 
   # We run a remote provisioner on the instance after creating it.
