@@ -6,17 +6,18 @@ connect.
 
 Example: ~/.ssh/terraform.pub
 DESCRIPTION
+
   default = "~/.ssh/terraform.pub"
 }
 
 variable "key_name" {
   description = "Desired name of AWS key pair"
-  default = "terraform-key"
+  default     = "terraform-key"
 }
 
 variable "aws_region" {
   description = "AWS region to launch servers."
-  default = "eu-west-1"
+  default     = "eu-west-1"
 }
 
 # Ubuntu Precise 12.04 LTS (x64)
