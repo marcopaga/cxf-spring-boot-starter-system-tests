@@ -25,3 +25,13 @@ If you are using *IAM* you may want to check if your access key ist active: http
 
     AWS_ACCESS_KEY_ID
     AWS_SECRET_ACCESS_KEY
+
+# Open Issues
+
+## Ansible usage of the virtualenv 
+
+Ansible seems to have issues regarding the virtualenv. [Using Python virtualenv with ansible](https://www.zigg.com/2014/using-virtualenv-python-local-ansible.html) addresses this issue for a static inventory. Since I'm using a ec2 dynaimic inventory I can't use this fix... 
+
+Current error message
+
+    failed: [52.214.200.37] (item=1) => {"failed": true, "item": "1", "msg": "Failed to import docker-py - No module named docker. Try `pip install docker-py`"}

@@ -2,7 +2,14 @@
 
 - hosts: tag_Role_bootapp
   tasks:
-    - command: echo this instance is used for the boot application
+    - docker_container:
+          name: "bootapp{{ item }}"
+          recreate: yes
+          image: marcopaga/cxf-spring-boot-starter-system-tests
+      with_sequence: count=4
+    - docker_container:
+        name: loadbalancer
+        image: nginx:alpine
 
 - hosts: all
   tasks:
