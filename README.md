@@ -14,6 +14,7 @@ I recommend installing boto and boto3 in a [python virtualenv](http://docs.pytho
 ## boto und boto3 installieren
     pip install boto
     pip install boto3
+    pip install docker-py
 
 # Before working on the project
     

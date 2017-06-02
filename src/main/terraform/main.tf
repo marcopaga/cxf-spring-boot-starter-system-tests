@@ -85,6 +85,17 @@ resource "aws_security_group" "default" {
     ]
   }
 
+  # HTTP-Alternative access from the VPC
+  ingress {
+    from_port = 8080
+    to_port   = 8080
+    protocol  = "tcp"
+
+    cidr_blocks = [
+      "10.0.0.0/16",
+    ]
+  }
+
   # outbound internet access
   egress {
     from_port = 0
@@ -116,6 +127,13 @@ resource "aws_elb" "web" {
     instance_port     = 80
     instance_protocol = "http"
     lb_port           = 80
+    lb_protocol       = "http"
+  }
+
+  listener {
+    instance_port     = 8080
+    instance_protocol = "http"
+    lb_port           = 8080
     lb_protocol       = "http"
   }
 }
@@ -160,11 +178,15 @@ resource "aws_instance" "web" {
   }
 
   # We run a remote provisioner on the instance after creating it.
-  # In this case, we just install nginx and start it. By default,
-  # this should be on port 80
   provisioner "remote-exec" {
     inline = [
-      "echo Working",
+      "sudo apt-get update",
+      "sudo apt-get -y install apt-transport-https ca-certificates curl software-properties-common",
+      "sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -",
+      "sudo apt-get -y install python-software-properties",
+      "sudo add-apt-repository \"deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable\"",
+      "sudo apt-get update",
+      "sudo apt-get -y install docker-ce",
     ]
   }
 }
